@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Projekt</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const form = document.querySelector('form');
+      const titleInput = document.querySelector('input[name="title"]');
+      const aboutTextarea = document.querySelector('textarea[name="about"]');
+      const contentTextarea = document.querySelector('textarea[name="content"]');
+      const imageInput = document.querySelector('input[name="image"]');
+      const categorySelect = document.querySelector('select[name="category"]');
+      const authorInput = document.querySelector('input[name="author"]');
+      const publishedDateInput = document.querySelector('input[name="published_date"]');
+
+      form.addEventListener('submit', (event) => {
+        if (titleInput.value.length < 5 || titleInput.value.length > 30) {
+          titleInput.style.borderColor = 'red';
+          event.preventDefault();
+          const titleError = document.createElement('span');
+          titleError.className = 'error-message';
+          titleError.textContent = 'Naslov vijesti mora imati između 5 i 30 znakova.';
+          titleInput.parentNode.appendChild(titleError);
+        }
+
+        if (aboutTextarea.value.length < 10 || aboutTextarea.value.length > 100) {
+          aboutTextarea.style.borderColor = 'red';
+          event.preventDefault();
+          const aboutError = document.createElement('span');
+          aboutError.className = 'error-message';
+          aboutError.textContent = 'Kratki sadržaj vijesti mora imati između 10 i 100 znakova.';
+          aboutTextarea.parentNode.appendChild(aboutError);
+        }
+
+        if (contentTextarea.value.trim() === '') {
+          contentTextarea.style.borderColor = 'red';
+          event.preventDefault();
+          const contentError = document.createElement('span');
+          contentError.className = 'error-message';
+          contentError.textContent = 'Tekst vijesti ne smije biti prazan.';
+          contentTextarea.parentNode.appendChild(contentError);
+        }
+
+        if (imageInput.files.length === 0) {
+          imageInput.style.borderColor = 'red';
+          event.preventDefault();
+          const imageError = document.createElement('span');
+          imageError.className = 'error-message';
+          imageError.textContent = 'Morate odabrati sliku.';
+          imageInput.parentNode.appendChild(imageError);
+        }
+
+        if (categorySelect.value === '') {
+          categorySelect.style.borderColor = 'red';
+          event.preventDefault();
+          const categoryError = document.createElement('span');
+          categoryError.className = 'error-message';
+          categoryError.textContent = 'Morate odabrati kategoriju.';
+          categorySelect.parentNode.appendChild(categoryError);
+        }
+
+        if (authorInput.value.trim() === '') {
+          authorInput.style.borderColor = 'red';
+          event.preventDefault();
+          const authorError = document.createElement('span');
+          authorError.className = 'error-message';
+          authorError.textContent = 'Morate unijeti autora.';
+          authorInput.parentNode.appendChild(authorError);
+        }
+
+        if (publishedDateInput.value === '') {
+          publishedDateInput.style.borderColor = 'red';
+          event.preventDefault();
+          const dateError = document.createElement('span');
+          dateError.className = 'error-message';
+          dateError.textContent = 'Morate odabrati datum objave.';
+          publishedDateInput.parentNode.appendChild(dateError);
+        }
+      });
+    });
+  </script>
+  <style>
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Projekt</h1>
+    <nav>
+      <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="forma.html">Forma</a></li>
+        <li><a href="kategorija.php?category=Sport">Sport</a></li>
+        <li><a href="kategorija.php?category=Kultura">Kultura</a></li>
+        <li><a href="administrator.php">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="forma">
+        <h1>Kreirajte novu vijest</h1>
+        <div class="form-container">
+            <div class="form-wrapper">
+              <form action="skripta.php" method="POST" enctype="multipart/form-data">
+                <div class="form-item">
+                  <label for="author">Autor</label>
+                  <div class="form-field">
+                    <input type="text" name="author" class="form-field-textual">
+                  </div>
+                </div>
+                <div class="form-item">
+                  <label for="published_date">Datum objave</label>
+                  <div class="form-field">
+                    <input type="date" name="published_date" class="form-field-textual">
+                  </div>
+                </div>
+                
+            <div class="form-item">
+            <label for="title">Naslov vijesti</label>
+            <div class="form-field">
+            <input type="text" name="title" class="form-field-textual">
+            </div>
+            </div>
+            <div class="form-item">
+            <label for="about">Kratki sadržaj vijesti (do 50 znakova)</label>
+            <div class="form-field">
+            <textarea name="about" id="" cols="30" rows="10" class="formfield-textual"></textarea>
+            </div>
+            </div>
+            <div class="form-item">
+            <label for="content">Sadržaj vijesti</label>
+            <div class="form-field">
+            <textarea name="content" id="" cols="30" rows="10" class="form-field-textual"></textarea>
+            </div>
+            </div>
+            <div class="form-item">
+            <label for="image">Slika: </label>
+            <div class="form-field">
+              <input type="file" accept="image/jpeg, image/png" class="input-text" name="image"/>
+            </div>
+            </div>
+            <div class="form-item">
+            <label for="category">Kategorija vijesti</label>
+            <div class="form-field">
+            <select name="category" id="" class="form-field-textual">
+            <option value="sport">Sport</option>
+            <option value="kultura">Kultura</option>
+            </select>
+            </div>
+            </div>
+            <div class="form-item">
+            <label>Spremiti u arhivu:
+            <div class="form-field">
+            <input type="checkbox" name="archive">
+            </div>
+            </label>
+            </div>
+            <div class="form-item">
+            <button type="reset" value="Poništi">Poništi</button>
+            <button type="submit" value="Prihvati">Prihvati</button>
+            </div>
+            </form>
+            </div>
+            </div>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Duje Čamo, 2023. dcamo@tvz.hr</p>
+  </footer>
+</body>
+</html>
+
